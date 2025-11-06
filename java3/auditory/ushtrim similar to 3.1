@@ -1,0 +1,93 @@
+You are creating a small program to check if a sports team is “strong” enough.
+
+Class Player
+Attributes:
+    name (char array)
+    skillLevel (int, from 1 to 10)
+     position (enum: goalkeeper, defender, midfielder, forward)
+Methods:
+    Setters and getters for all attributes.
+
+Class Team
+Attributes:
+    player1 (Player)
+    player2 (Player)
+Methods:
+    isStrong(): Returns true if the average skill level of both players is 7 or higher, else false.
+
+Main Program:
+       Ask the user to input the names, skill levels, and positions of two players.
+       Create Player objects and a Team object.
+       Call isStrong() and print whether the team is strong enough.
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+enum Position{
+    goalkeeper,
+    defender,
+    midfielder,
+    forward
+};
+class Player{
+private:
+    char emri[100];
+    int skilli;
+    Position pozicioni;
+public:
+    Player(){
+
+    }
+    Player(char *name , int s, Position p){
+        strcpy(emri, name);
+        skilli=s;
+        pozicioni=p;
+    }
+    int getSkill(){
+        return skilli;
+    }
+
+};
+class Team{
+private:
+    Player player1;
+    Player player2;
+public:
+    Team(){
+
+    }
+    Team(Player p1, Player p2){
+        player1=p1;
+        player2=p2;
+    }
+    bool isStrong(){
+        if (((player1.getSkill()+ player2.getSkill())/2)>=7){
+            return true;
+        }
+        return false;
+    }
+};
+
+
+int main(){
+    char emri1[20];
+    char emri2[20];
+    int skilli1,skilli2;
+    int pozicioni1, pozicioni2;
+    cin.getline(emri1, 20);
+    cin>>skilli1>>pozicioni1;
+    cin.ignore();
+    cin.getline(emri2, 20);
+    cin>>skilli2>>pozicioni2;
+    cin.ignore();
+    Player p1(emri1, skilli1, (Position)pozicioni1);
+    Player p2(emri2,skilli2,(Position)pozicioni2);
+    Team t(p1, p2);
+    if (t.isStrong()){
+        cout<<" is strong enough";
+    }else{
+        cout<<" not strong enough";
+    }
+
+
+}
