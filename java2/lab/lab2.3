@@ -1,0 +1,72 @@
+Create a class BasketballPlayer which has the following information:
+
+name (array of characters not longer than 20 characters)
+surname (array of characters not longer than 20 characters)
+jersey number (integer)
+points on first match (integer)
+points on second match (integer)
+points on third match (integer)
+Write the needed methods for the class, and write a method for printing details about the basketball player in the following format "Player: name surname with number: number has avg_pts points on average".
+The program should receive the name, surname, jersey number and points from 3 matches on standard input.
+
+On standard output just print out the details about the basketball player using the created method.
+
+
+For example:
+
+Input	
+Marko
+Petrov
+10
+13
+14
+15
+Result :
+Player: Marko Petrov with number: 10 has 14 points on average
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+
+class BasketballPlayer{
+private:
+    char name[20];
+    char surname [20];
+    int numer;
+    double piket1;
+    double piket2;
+    double piket3;
+public:
+    BasketballPlayer(){
+
+    }
+    BasketballPlayer(char *n, char*s,int nu, int pi1, int pi2, int pi3){
+        strcpy(name , n);
+        strcpy(surname , s);
+        numer=nu;
+        piket1=pi1;
+        piket2=pi2;
+        piket3=pi3;
+    }
+    void print(){
+        cout<<"Player: " <<name<<" "<<surname<<" with number: "<<numer<<" has "<<(piket1+piket2+piket3)/3.0<<" points on average";
+    }
+};
+int main(){
+    char name[20];
+    char surname[20];
+    int numri;
+    double piket1;
+    double piket2;
+    double piket3;
+    cin>>name;
+    cin>>surname;
+    cin>>numri;
+    cin>>piket1;
+    cin>>piket2;
+    cin>>piket3;
+    BasketballPlayer B=BasketballPlayer(name, surname,numri, piket1, piket2,piket3);
+    B.print();
+
+}
