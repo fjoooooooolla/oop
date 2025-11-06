@@ -1,0 +1,178 @@
+//Define a class called Country which will store the following information:
+//
+//name (a string of maximum 100 characters) representing the name of the country
+//capital (a string of maximum 100 characters) representing the capital city
+//area (a decimal number) representing the area in thousands of square kilometers
+//population (a decimal number) representing the population in millions.
+//All variables inside the class should be private. The following should be defined within the class:
+//
+//constructors (with and without parameters)
+//destructor
+//set methods
+//get methods
+//The following methods should be defined within the class:
+//
+//display(), which will print the information about the country in the following format:
+//Country: Guyana
+//
+//Capital: Georgetown
+//
+//Area: 214
+//
+//Population: 0.8
+//
+//Outside the class:
+//
+//sortCountries(Country *countries, int n), which will sort the countries in ascending order by their area.
+//DO NOT MODIFY THE MAIN FUNCTION.
+//
+//For example:
+//
+//Input	
+//5
+//Brazil Brasília 8515 213.3 
+//Chile Santiago 756 19.1 
+//Cyprus Nicosia 9 1.2 
+//Gambia Banjul 11 2.3 
+//Greece Athens 131957 10.7 
+//Result:
+
+//-->Testing set methods and display()
+//Country: Greece
+//Capital: Athens
+//Area: 131957
+//Population: 10.7
+//
+//-->Testing sortCountries()
+//Country: Cyprus
+//Capital: Nicosia
+//Area: 9
+//Population: 1.2
+//Country: Gambia
+//Capital: Banjul
+//Area: 11
+//Population: 2.3
+//Country: Chile
+//Capital: Santiago
+//Area: 756
+//Population: 19.1
+//Country: Brazil
+//Capital: Brasília
+//Area: 8515
+//Population: 213.3
+//Country: Greece
+//Capital: Athens
+//Area: 131957
+//Population: 10.7
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Country{
+private:
+    char name[100];
+    char capital[100];
+    double area;
+    double population;
+public:
+    Country(){
+
+    }
+    Country(char*n, char*c, double a, double p){
+        strcpy(name, n);
+        strcpy(capital, c);
+        area=a;
+        population=p;
+    }
+    void setName(char *n){
+        strcpy(name ,n);
+    }
+
+    void setCapital(char *c){
+        strcpy(capital,c);
+
+    }
+    void setArea(double a){
+        area=a;
+    }
+    void setPopulation(double p){
+        population=p;
+    }
+    char *getname (){
+        return name;
+    }
+    char *getcapital(){
+        return capital;
+    }
+    double getarea(){
+        return area;
+    }
+    double getpopulation(){
+        return population;
+    }
+
+    void display(){
+        cout<<"Country: "<<name<<endl;
+        cout<<"Capital: "<<capital<<endl;
+        cout<<"Area: "<<area<<endl;
+        cout<<"Population: "<<population<<endl;
+    }
+};
+void sortCountries(Country *countries , int n){
+    Country p;
+    for (int i = 0; i < n; ++i) {
+        for (int j = i+1; j < n; ++j) {
+            if (countries[i].getarea()<countries[j].getarea()){
+                p=countries[j];
+                countries[j]=countries[i];
+                countries[i]=p;
+            }
+        }
+    }
+    for (int i = 0; i < n; ++i) {
+        countries[i].display();
+    }
+
+}
+
+
+
+int main() {
+    int n;
+    cin >> n;
+    Country countries[100];
+
+    char name[100];
+    char capital[100];
+    double area;
+    double population;
+
+    for (int i = 0; i < n-1; i++)  {
+        cin>>name;
+        cin >> capital;
+        cin >> area;
+        cin>>population;
+
+        // testing constructor with arguments
+        countries[i] = Country(name, capital, area, population);
+
+    }
+
+
+    // testing set methods and display for last element
+    cin>>name;
+    cin >> capital;
+    cin >> area;
+    cin>>population;
+    countries[n-1].setName(name);
+    countries[n-1].setCapital(capital);
+    countries[n-1].setArea(area);
+    countries[n-1].setPopulation(population);
+
+    cout<<"-->Testing set methods and display()"<<endl;
+    countries[n-1].display();
+    cout<<endl;
+
+    cout<<"-->Testing sortCountries()"<<endl;
+    sortCountries(countries,n);
+    return 0;
+}
