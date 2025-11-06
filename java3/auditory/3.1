@@ -1,0 +1,75 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+enum Gender{
+    female,
+    male,
+    other
+};
+class Mate{
+private:
+    char name[100];
+    int age;
+    Gender gender;
+public:
+    Mate(){
+
+    }
+    Mate(char * n, int a, Gender g){
+        strcpy(name , n);
+        age =a;
+        gender=g;
+    }
+
+    char setName(char *n){
+        strcpy(name , n);
+    }
+    char *getName(){
+        return name;
+    }
+};
+class Date{
+private:
+    Mate mate1;
+    Mate mate2;
+public:
+    Date(){
+
+    }
+    Date(Mate m1, Mate m2){
+        mate1=m1;
+        mate2=m2;
+    }
+    bool isSuccess() {
+        char *name = mate1.getName(); // e la inicializu qe me mujt ma lehte me get in to name array (MBAJ MEND)
+        int sum = 0;
+        for (int i = 0; i < strlen(name); ++i) {
+            sum += name[i];//char i din edhe numrat e ascii table edhe shkronjat a strlen i njeh shkronjat psh fjala fjolla ka 6 shkronja
+        }
+        return sum % 2 == 0; 
+    }
+};
+int main(){
+
+    char name1[20];
+    char name2[20];
+    int age1;
+    int age2;
+    int gender1;
+    int gender2;
+    cin.getline(name1,20);
+    cin>>age1;
+    cin>>gender1;
+    cin.ignore();
+    cin.getline(name2,20);
+    cin>>age2;
+    cin>>gender2;
+    Mate m1=Mate(name1, age1, (Gender)gender1);
+    Mate m2=Mate(name2, age2, (Gender)gender2);
+    Date d(m1,m2);
+    if (d.isSuccess()){
+        cout<<"lets do again";
+    }else{
+        cout<<" not successful";
+    }
+}
