@@ -73,3 +73,100 @@ int main(){
         cout<<" not successful";
     }
 }
+
+
+
+
+-------------------------------------------------------------------------------------------------------------------------------------
+
+#include <iostream>
+#include <cstring>
+using namespace std;
+enum Gender{
+    male,
+    female,
+    other
+};
+class Mate{
+private:
+    char name[20];
+    int age;
+    Gender gjinia;
+public:
+    Mate(){
+
+    }
+    Mate(char*e, int m, Gender gj){
+        strcpy(name , e);
+        age=m;
+        gjinia=gj;
+    }
+    char *getName(){
+        return name;
+    }
+
+    void printGjinia(){
+        switch (gjinia) {
+            case male:
+                cout<<"male";
+                break;
+            case female:
+                cout<<"female";
+                break;
+            case other:
+                cout<<"other";
+                break;
+        }
+    }
+    void print(){
+        cout<<name<<" "<<age<<" ";
+        printGjinia();
+    }
+};
+class Date{
+private:
+    Mate mate1;
+    Mate mate2;
+public:
+    Date(){
+
+    }
+    Date(Mate m1, Mate m2){
+        mate1=m1;
+        mate2=m2;
+    }
+    Date(const Date &d){
+        mate1=d.mate1;
+        mate2=d.mate2;
+    }
+    bool isSuccess(){
+        char*name=mate1.getName();
+        int sum=0;
+        for (int i = 0; i < strlen(name); ++i) {
+            sum=sum+name[i];
+        }
+        int sum1=0;
+        char*name1=mate2.getName();
+        for (int i = 0; i < strlen(name1); ++i) {
+            sum1=sum+name1[i];
+        }
+        if ((sum+sum1)%2==0){
+            return true;
+        }else{
+            return false;
+        }
+    }
+};
+
+int main(){
+    Mate m1("Barby", 20, female);
+    Mate m2("Ken", 26, male);
+    Date date(m1, m2);
+    if (date.isSuccess()){
+        cout<<"is a date";
+    }else{
+        cout<<" not a date";
+    }
+
+    }
+
