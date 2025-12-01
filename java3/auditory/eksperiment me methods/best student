@@ -1,0 +1,78 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Student{
+private:
+    char name[100];
+    int index;
+    int grades[5];
+public:
+    Student(){
+    }
+    Student(char *n , int i , int g1, int g2, int g3 , int g4, int g5){
+        strcpy(name , n);
+        index=i;
+         grades[0]=g1;
+         grades[1]=g2;
+         grades[2]=g3;
+         grades[3]=g4;
+         grades[4]=g5;
+    }
+    char *getname (){
+        return name;
+    }
+
+    float average(){
+        int sum=0;
+        for (int i = 0; i < 5; ++i) {
+            sum=sum+grades[i];
+        }
+        return sum/5.0;
+    }
+    void print(){
+        cout<<name;
+    }
+};
+class Course{
+private:
+    char name[100];
+    Student student[3];
+public:
+    Course(){
+    }
+    Course(char *n, Student s1, Student s2, Student s3){
+        strcpy(name ,n);
+            student[0]=s1;
+            student[1]=s2;
+            student[2]=s3;
+
+    }
+    Student getstudent(int i ){
+        return student[i];
+    }
+};
+Student beststudent(Course c1){
+    Student best =c1.getstudent(0);
+    float bestaverage=best.average();
+
+    for (int i = 0; i < 3; ++i) {
+        Student current =c1.getstudent(i);
+        float currentaverage = current.average();
+
+        if (currentaverage>bestaverage){
+            bestaverage=currentaverage;
+            best=current;
+        }
+    }
+    return best;
+
+}
+int main(){
+    Student s1("Ana",231611, 6, 7,8,8,6);
+    Student s2("Rita", 234321, 8 , 6 , 9 ,8, 7);
+    Student s3("Agan", 243212, 8 ,9 ,8, 7, 6 );
+    Course c1("OOP",s1, s2, s3);
+    Student top= beststudent(c1);
+    top.print();
+
+}
