@@ -1,0 +1,74 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class City{
+private:
+    char name[100];
+    char country[100];
+    long int population;
+public:
+    City(){
+    }
+    City(char *n, char *c, long int p){
+        strcpy(name ,n);
+        strcpy(country ,c);
+        population=p;
+    }
+    char *getname(){
+        return name;
+    }
+    void print (){
+        cout<<name;
+    }
+};
+class Journey{
+private:
+    City origin;
+    City destionation;
+    int passangersOtoD;
+    int passangerDtoO;
+public:
+    Journey(){
+    }
+     City getorigin() {
+         return origin;
+     }
+     City getdestination(){
+        return destionation;
+
+    }
+    int getpassangerOtoD(){
+        return passangersOtoD;
+
+    }
+    int getpassangerDtoO(){
+        return passangerDtoO;
+    }
+    Journey(City o , City d, int pOD, int pDo){
+        origin=o;
+        destionation=d;
+        passangersOtoD=pOD;
+        passangerDtoO=pDo;
+    }
+};
+
+City roundtrip(Journey j1, Journey j2){
+    if (strcmp(j1.getorigin().getname(), j2.getdestination().getname())==0 && strcmp(j1.getdestination().getname(),j2.getorigin().getname())==0){
+        int passangerOD=j1.getpassangerOtoD()+j2.getpassangerDtoO();
+        int passangerDO =j1.getpassangerDtoO()+j2.getpassangerOtoD();
+        if (passangerOD>passangerDO){
+            return j1.getorigin();
+        }else{
+            return j1.getdestination();
+        }
+    }
+    return City();
+}
+int main(){
+    City c1("Tokyo", "Japan", 2.000);
+    City c2("London", "UK ", 1.000);
+    Journey j1 (c1,c2,1000,2000);
+    Journey j2 (c2 ,c1 , 2000, 100);
+    City w= roundtrip(j1 , j2);
+    w.print();
+}
