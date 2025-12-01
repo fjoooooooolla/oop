@@ -1,0 +1,77 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Team{
+private:
+    char name[100];
+    int year;
+    char city[100];
+public:
+    Team(){
+
+    }
+    Team(char *n, int y, char *c){
+        strcpy(name , n);
+        year=y;
+        strcpy(city ,c);
+    }
+    char *getName(){
+        return name;
+    }
+    void print(){
+        cout<<name<<" ";
+        cout<<city;
+    }
+};
+
+class Game{
+private:
+    Team host;
+    Team guest;
+    int goalsbyhost;
+    int goalbyguest;
+public:
+    Game(){
+
+    }
+    Game(Team h , Team g, int gHost , int gGuest){
+        host=h;
+        guest=g;
+        goalsbyhost=gHost;
+        goalbyguest=gGuest;
+    }
+    Team gethost(){
+        return host;
+    }
+    Team getguest(){
+        return guest;
+    }
+    int getgoalsH(){
+        return goalsbyhost;
+    }
+    int gethoalsG(){
+        return goalbyguest;
+    }
+};
+Team rematch(Game g1, Game g2){
+    if ((strcmp(g1.gethost().getName(),g2.getguest().getName())==0) && strcmp(g1.getguest().getName(),g2.gethost().getName())==0){
+        int goalsHost=g1.getgoalsH()+g2.gethoalsG();
+        int goalsGuest=g1.gethoalsG()+g2.getgoalsH();
+        if (goalsHost>goalsGuest){
+            return g1.gethost();
+        }
+        else{
+            return g1.getguest();
+        }
+    }
+    return Team();
+}
+int main(){
+ Team t1("Fc Barcelona" ,2000, "Barcelona");
+ Team t2("Real Madrid ", 2000, "Madrid");
+ Game g1(t1 ,t2, 5 , 0);
+ Game g2(t2 , t1 , 3, 5);
+ Team winner = rematch(g1, g2);
+ winner.print();
+
+}
