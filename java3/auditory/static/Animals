@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Animal {
+    private:
+    char type[50];
+    static int totalAnimals;
+public:
+    Animal() {
+
+    }
+    Animal(char *t) {
+        strcpy(type, t);
+        totalAnimals++;
+    }
+    ~Animal() {
+        totalAnimals--;
+    }
+    void print() {
+        cout<<totalAnimals<<endl;
+    }
+};
+int Animal::totalAnimals = 0;
+int main() {
+    Animal animal("majmun");
+    Animal animal1("kali");
+    Animal animal2("zebra");
+    animal.print();
+}
