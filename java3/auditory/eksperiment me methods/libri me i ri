@@ -1,0 +1,66 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Book{
+private:
+    char title[100];
+    char author[100];
+    int pages;
+    int publishedYear;
+public:
+    Book(){
+    }
+    Book(char *t, char *a, int p, int y){
+        strcpy(title, t);
+        strcpy(author , a);
+        pages=p;
+        publishedYear=y;
+    }
+    int getpublishedyear(){
+        return publishedYear;
+    }
+    void print(){
+        cout<<title<<endl;
+        cout<<publishedYear;
+    }
+};
+
+class Library{
+private:
+    char name[100];
+    Book books[3];
+public:
+    Library(){
+
+    }
+    Library(char *n, Book book1,Book book2, Book book3){
+        strcpy(name , n);
+        books[0]=book1;
+        books[1]=book2;
+        books[2]=book3;
+    }
+    Book getBook(int i ){
+        return books[i];
+    }
+};
+Book newestBook(Library library){
+    Book newest = library.getBook(0);
+    int year = newest.getpublishedyear();
+    for (int i = 1; i < 3; ++i) {
+        Book current = library.getBook(i);
+        int currentyear= current.getpublishedyear();
+        if (currentyear>year){
+            year=currentyear;
+            newest=current;
+        }
+        return newest;
+    }
+}
+int main(){
+    Book b1("Metamorfoza","Franc Kafka",200,1950);
+    Book b2("Gjenerali i ushtrise se vdekur", "Ismail Kadare",340,1980);
+    Book b3("Krim dhe Ndeshkim","Jane Austen",400, 1813);
+    Library library ("Akademska kniga ", b1 , b2 , b3);
+    Book newest= newestBook(library);
+    newest.print();
+}
