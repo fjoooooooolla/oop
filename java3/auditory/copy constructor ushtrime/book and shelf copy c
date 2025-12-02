@@ -1,0 +1,93 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Librarybook{
+private:
+    char title[100];
+    int pages;
+    int ratings[5];
+public:
+    Librarybook(){
+        title[0]='\0';
+        pages=0;
+        ratings[0];
+    }
+    Librarybook(char *t, int p, int r1, int r2, int r3, int r4, int r5){
+        strcpy(title,t);
+        pages=p;
+        ratings[0]=r1;
+        ratings[1]=r2;
+        ratings[2]=r3;
+        ratings[3]=r4;
+        ratings[4]=r5;
+    }
+    Librarybook(const Librarybook &librarybook){
+        strcpy(title, librarybook.title);
+        pages=librarybook.pages;
+        ratings[0]=librarybook.ratings[0];
+        ratings[1]=librarybook.ratings[1];
+        ratings[2]=librarybook.ratings[2];
+        ratings[3]=librarybook.ratings[3];
+        ratings[4]=librarybook.ratings[4];
+    }
+    double averageRating(){
+        int sum=0;
+        for (int i = 0; i < 5; ++i) {
+            sum=sum+ratings[i];
+        }
+        return sum/5.0;
+    }
+    int getpages(){
+        return pages;
+    }
+    void print (){
+        cout<<title<<" ";
+        cout<<pages<<" ";
+        cout<<averageRating();
+    }
+};
+class Shelf{
+private:
+    char name[100];
+    Librarybook librarybook[3];
+public:
+    Shelf(){
+//
+//        name[0]='\0';
+//        librarybook[0]'\0';
+    }
+    Shelf(char *emri, const Librarybook librarybook1[3]){
+        strcpy(name, emri);
+        for (int i = 0; i < 3; ++i) {
+            librarybook[i]=librarybook1[i];
+        }
+    }
+    Shelf(const Shelf &sh){
+        strcpy(name , sh.name);
+        for (int i = 0; i < 3; ++i) {
+            librarybook[i]=sh.librarybook[i];
+        }
+    }
+    int total(){
+        int shuma=0;
+        for (int i = 0; i < 3; ++i) {
+            shuma=shuma+librarybook[i].getpages();
+        }
+        return shuma;
+    }
+    void display(){
+        cout<<total()<<endl;
+    }
+};
+int main(){
+Librarybook l1("Ikigai", 170, 4,5,6,7,4);
+Librarybook l2("Mrrizi i Zanave", 190 , 6, 7, 6, 8,9);
+Librarybook l3("The monk who sold his ferrari", 220 , 9, 7, 9, 8,9);
+//l2.print();
+Librarybook librarybook[3]={l1, l2 ,l3};
+Shelf shelf("Favourites ", librarybook);
+
+Shelf shelf2(shelf);
+shelf.display();
+shelf2.display();
+}
