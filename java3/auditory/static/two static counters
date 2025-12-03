@@ -1,0 +1,57 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Device {
+private:
+    char name[20];
+    int battery;
+    static int currentDevices;
+    static int Devicesbelow20;
+    public:
+    Device() {
+
+    }
+    Device(char *emri, int bateria) {
+        strcpy(name, emri);
+        battery = bateria;
+        currentDevices++;
+        if (battery<20) {
+            Devicesbelow20++;
+        }
+    }
+    Device(const Device &device) {
+        strcpy(name, device.name);
+        battery = device.battery;
+        currentDevices++;
+        if (battery<20) {
+            Devicesbelow20++;
+        }
+    }
+    ~Device() {
+        currentDevices--;
+        if (battery<20) {
+            Devicesbelow20--;
+        }
+
+    }
+    void print() {
+        cout << name << " " << battery<<endl;
+    }
+    static void printstatics() {
+        cout<<currentDevices<<endl;
+        cout<<Devicesbelow20<<endl;
+    }
+};
+ int Device::currentDevices = 0;
+ int Device::Devicesbelow20 = 0;
+
+int main() {
+    {
+        Device d1("telefon",10);
+        Device d2("llaptop",70);
+        Device d3=d1; //copy constructor
+        // d1.printstatics();
+        Device::printstatics();
+    }
+    Device::printstatics();
+}
