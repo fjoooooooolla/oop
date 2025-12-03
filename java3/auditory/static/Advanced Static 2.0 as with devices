@@ -1,0 +1,55 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Car {
+private:
+    char platename[100];
+    int minutes;
+    static int currentparked;
+    static int parkedmorethan120min;
+    public:
+    Car() {
+        minutes = 0;
+    }
+    Car(char *numritablices,int minutat) {
+        strcpy(platename,numritablices);
+        minutes = minutat;
+        currentparked++;
+        if (minutat>120) {
+            parkedmorethan120min++;
+        }
+    }
+    Car(const Car &c) {
+        strcpy(platename,c.platename);
+        minutes = c.minutes;
+        currentparked++;
+        if (minutes>120) {
+            parkedmorethan120min++;
+        }
+    }
+    ~Car() {
+        currentparked--;
+        if (minutes>120) {
+            parkedmorethan120min--;
+        }
+    }
+    void print() {
+        cout << platename << " " << minutes << endl;
+    }
+    static void printstats() {
+        cout << currentparked << " " << parkedmorethan120min << endl;
+    }
+};
+int Car::currentparked=0;
+int Car::parkedmorethan120min=0;
+int main() {
+    {
+        Car c1("678898",70);
+        Car c2("456422",160);
+        Car c3("87989",200);
+        Car::printstats();
+        Car c4=c2;
+        Car::printstats();
+    }
+    Car::printstats();
+}
