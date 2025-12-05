@@ -1,0 +1,133 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+
+class Page {
+private:
+    int pageNumber;
+    int wordCount;
+public:
+    Page() {
+        pageNumber = 0;
+        wordCount = 0;
+    }
+
+    Page(int pnr, int wordnr) {
+        pageNumber = pnr;
+        wordCount = wordnr;
+    }
+
+    void print() const {
+        cout << "Page " << pageNumber << " has " << wordCount << " words" << endl;
+    }
+
+    int getWordCount() const {
+        return wordCount;
+    }
+};
+
+class Document {
+private:
+    char name[100];
+    Page pages[4];
+
+    static int currentDocuments;
+    static int totalWords;  // sum of words of ALL documents
+
+    // helper: total words in THIS document
+    int totalWordsInThisDocument() const {
+        int sum = 0;
+        for (int i = 0; i < 4; ++i) {
+            sum += pages[i].getWordCount();
+        }
+        return sum;
+    }
+
+public:
+    // default constructor – does NOT touch statics
+    Document() {
+        name[0] = '\0';
+        // pages[] default-construct themselves
+    }
+
+    // constructor with name + 4 pages
+    Document(const char *n, const Page pagesArg[4]) {
+        strcpy(name, n);
+        for (int i = 0; i < 4; ++i) {
+            pages[i] = pagesArg[i];
+        }
+
+        currentDocuments++;
+        totalWords += totalWordsInThisDocument();
+    }
+
+    // copy constructor
+    Document(const Document &d) {
+        strcpy(name, d.name);
+        for (int i = 0; i < 4; ++i) {
+            pages[i] = d.pages[i];
+        }
+
+        currentDocuments++;
+        totalWords += totalWordsInThisDocument();
+    }
+
+    // destructor
+    ~Document() {
+        currentDocuments--;
+        totalWords -= totalWordsInThisDocument();
+    }
+
+    // print words of THIS document
+    void print() const {
+        cout << "Document: " << name
+             << ", words in this document: " << totalWordsInThisDocument()
+             << endl;
+    }
+
+    // static stats – global across ALL documents
+    static void printStats() {
+        cout << "Documents: " << currentDocuments
+             << ", Total words: " << totalWords << endl;
+    }
+};
+
+// static definitions
+int Document::currentDocuments = 0;
+int Document::totalWords = 0;
+
+int main() {
+    {
+        // ---- Document 1 ----
+        Page p1(1, 370);
+        Page p2(2, 600);
+        Page p3(3, 1000);
+        Page p4(4, 560);
+        Page doc1Pages[4] = { p1, p2, p3, p4 };
+
+        Document d1("Dita", doc1Pages);
+
+        // ---- Document 2 ----
+        Page p5(1, 200);
+        Page p6(2, 300);
+        Page p7(3, 150);
+        Page p8(4, 250);
+        Page doc2Pages[4] = { p5, p6, p7, p8 };
+
+        Document d2("Nata", doc2Pages);
+
+        cout << "After creating d1 and d2:" << endl;
+        Document::printStats();  // should show: Documents: 2, Total words: sum(d1 + d2)
+
+        // ---- Copy of d1 ----
+        Document d3 = d1;  // copy constructor
+
+        cout << "After copying d1 into d3:" << endl;
+        Document::printStats();  // should show: Documents: 3, Total words: previous + wordsOf(d1)
+    } // end of block – d3, d2, d1 are destroyed here
+
+    cout << "After leaving the block (all documents destroyed):" << endl;
+    Document::printStats();  // should show: Documents: 0, Total words: 0
+
+    return 0;
+}
