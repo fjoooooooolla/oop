@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Counter{
+private:
+    int value;
+public:
+    Counter(){
+        value=0;
+    }
+    Counter(int v){
+        value=v;
+    }
+    Counter operator+(const Counter &other){
+        return Counter(value+other.value);
+    }
+    friend ostream& operator <<(ostream &os, const Counter & c);
+    friend istream& operator>>(istream &is,  Counter & c); //pa const 
+
+};
+ostream& operator<<(ostream &os, const Counter & c){
+    os<<c.value;
+    return os;
+}
+istream& operator>>(istream &is,  Counter &c){ //pa const 
+    is>>c.value;
+    return is;
+}
+
+int main(){
+    int value;
+    Counter a , b;
+    cin>>a>>b;
+    Counter c= a+b;
+    cout<<c;
+}
