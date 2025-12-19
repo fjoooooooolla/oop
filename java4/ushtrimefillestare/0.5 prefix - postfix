@@ -1,0 +1,42 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Counter{
+private:
+    int value;
+public:
+    Counter(){
+        value=0;
+    }
+    Counter(int v){
+        value=v;
+    }
+    void print(){
+        cout<<value<<endl;
+    }
+//    Counter& operator+=(const Counter&other ){
+//        value+=other.value;
+//        return *this;
+//    }
+    Counter& operator++(){
+        value++;
+        return *this;
+    }
+    Counter operator++(int){
+        Counter tmp=*this;
+        ++value;
+        return tmp;
+    }
+
+};
+
+int main(){
+    int value;
+    Counter c (5);
+    Counter a= ++c;
+    Counter b=c++;
+
+c.print();
+a.print();
+b.print();
+}
