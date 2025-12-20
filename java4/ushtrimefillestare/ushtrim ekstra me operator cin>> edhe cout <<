@@ -1,0 +1,36 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Book{
+private:
+    char title[100];
+    int pages;
+public:
+    Book(){
+
+    }
+    Book(char *t, int p ){
+        strcpy(title, t);
+        pages=p;
+    }
+    friend ostream& operator<<(ostream &os , const Book &book);
+    friend istream& operator>>(istream &is , Book &book);
+};
+ostream& operator<<(ostream &os , const Book &book){
+    os<<book.title<<" ";
+    os<<book.pages<<endl;
+    return os;
+}
+istream& operator>>(istream &is , Book &book){
+    is>>book.title;
+    is>>book.pages;
+    return is;
+}
+int main(){
+    char title[100];
+    int pages;
+    Book b1, b2;
+    cin>>b1>>b2;
+    cout<<b1<<b2;
+
+}
