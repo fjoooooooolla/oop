@@ -1,0 +1,42 @@
+#include <iostream>
+using namespace std;
+class Counter{
+private:
+    int value;
+public:
+    Counter(){
+        value=0;
+    }
+    Counter (int v){
+        value=v;
+    }
+    friend ostream& operator<<(ostream &os, const Counter &c);
+    friend istream& operator>>(istream &is, Counter &c);
+
+//    Counter operator+(const Counter&other){
+//        return Counter(value+other.value);
+//    }
+    bool operator==(const Counter &other)const{
+        return value==other.value;
+    }
+    bool operator !=(const Counter &other)const {
+        return !(*this==other);
+    }
+};
+ostream& operator<<(ostream &os, const Counter &c){
+    os<<c.value;
+    return os;
+}
+istream& operator>>(istream &is , Counter &c){
+    is>>c.value;
+    return is;
+}
+int main(){
+    Counter a, b,c;
+    cin>>a>>b>>c;
+    cout << (a == b) << endl;
+    cout << (a != b) << endl;
+    cout << (a == c) << endl;
+    cout << (a != c) << endl;
+
+}
