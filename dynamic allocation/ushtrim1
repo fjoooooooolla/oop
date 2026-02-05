@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Person{
+private:
+    char*name;
+    int age;
+public:
+    Person(char*emri, int mosha){
+        name = new char[strlen(emri)+1];
+        strcpy(name , emri);
+        age=mosha;
+    }
+    ~Person(){
+        delete[] name;
+    }
+    void print(){
+        cout<<name<<" "<<age;
+    }
+};
+int main(){
+    char name[50];
+    cin>>name;
+    int age;
+    cin>>age;
+    Person *p = new Person(name ,age); // without * it would be a normal stack Person person(name , age)
+    p->print();
+    delete p;
+}
