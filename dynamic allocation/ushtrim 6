@@ -1,0 +1,65 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Movie{
+private:
+    char*name ;
+    double*ratings;
+    int numRatings;
+public:
+    Movie(char*emri , double*vleresimet , int savleresimefut){
+        name = new char[strlen(emri)+1];
+        strcpy(name , emri);
+        numRatings=savleresimefut;
+        ratings = new double [savleresimefut];
+        for (int i = 0; i < savleresimefut; ++i) {
+            ratings[i]=vleresimet[i];
+        }
+
+    }
+    ~Movie(){
+        delete[] name;
+        delete[] ratings;
+    }
+    double averageRating(){
+        double sum=0;
+        for (int i = 0; i < numRatings; ++i) {
+            sum=sum+ratings[i];
+        }
+        return sum/numRatings;
+    }
+    void print(){
+        cout<<name<<endl;
+        for (int i = 0; i < numRatings; ++i) {
+            cout<<ratings[i]<<" ";
+        }
+        cout<<" "<<averageRating();
+        cout<<endl;
+    }
+};
+int main(){
+    int n;
+    cout<<"how many movies u want to enter babygirl?";
+    cin>>n;
+    char name[100];
+    int numratings;
+    double ratings[100];
+    Movie** movie = new Movie*[n];
+    for (int i = 0; i < n; ++i) {
+        cin.ignore();
+        cin.getline(name , 100);
+        cin>>numratings;
+        for (int j = 0; j < numratings; ++j) {
+            cin>>ratings[j];
+        }
+        movie[i] = new Movie(name , ratings, numratings);
+    }
+
+    for (int i = 0; i < n; ++i) {
+        movie[i]->print();
+    }
+    for (int i = 0; i < n; ++i) {
+        delete movie[i];
+    }
+    delete[]movie;
+}
