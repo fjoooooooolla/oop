@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Student{
+private:
+    char*name;
+    int*grades;
+    int n;
+public:
+    Student(char*emri, int*g, int m){
+        name = new char[strlen(emri)+1];
+        strcpy(name , emri);
+        grades = new int [m];
+
+        for (int i = 0; i < m; ++i) {
+            grades[i]=g[i];
+        }
+        n=m;
+    }
+~Student(){
+        delete[] name;
+        delete[] grades;
+    }
+    void print(){
+        cout<<name<<endl;
+        cout<<n<<endl;
+        for (int i = 0; i < n; ++i) {
+            cout<<grades[i]<<endl;
+        }
+    }
+};
+int main(){
+    char studenti[50];
+    cin>>studenti;
+    int sanota;
+    cin>>sanota;
+    int *notat = new int [sanota];
+    for (int i = 0; i < sanota; ++i) {
+        cin>>notat[i];
+    }
+    Student student(studenti, notat, sanota);
+    student.print();
+    delete[] notat;
+}
