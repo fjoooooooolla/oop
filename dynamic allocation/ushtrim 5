@@ -1,0 +1,44 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Movie{
+private:
+    char*title;
+    int year;
+    double rating;
+public:
+    Movie(char *titulli , int viti, double vleresimi){
+        title = new char [strlen(titulli)+1];
+        strcpy(title,titulli);
+        year=viti;
+        rating=vleresimi;
+    }
+    ~Movie(){
+        delete[] title;
+    }
+    void print(){
+        cout<<title<<" "<<rating;
+    }
+};
+int main(){
+    int n;
+    cin>>n;
+    char title[50];
+    int year;
+    double rating;
+    Movie**pMovie = new Movie*[n];
+    for (int i = 0; i < n; ++i) {
+        cin.ignore();
+        cin.getline(title, 50);
+        cin>>year;
+        cin>>rating;
+        pMovie[i]= new Movie(title, year, rating);
+    }
+    for (int i = 0; i < n; ++i) {
+        pMovie[i]->print();
+    }
+    for (int i = 0; i < n; ++i) {
+        delete pMovie[i];
+    }
+    delete[] pMovie;
+}
