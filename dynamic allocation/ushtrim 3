@@ -1,0 +1,46 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Book{
+private:
+    char*title;
+    int pages;
+public:
+    Book(){
+        title= nullptr;
+        pages=0;
+    }
+    Book(char*titulli, int faqet){
+        title= new char [strlen(titulli)+1];
+        strcpy(title , titulli);
+        pages=faqet;
+    }
+    ~Book(){
+        delete[] title;
+    }
+    void print(){
+        cout<<title<<" "<<pages;
+    }
+};
+int main(){
+    int n;
+    cin>>n;
+    Book**book = new Book*[n];
+    char title[50];
+    int pages;
+    for (int i = 0; i < n; ++i) {
+        cin.ignore();
+        cin.getline(title, 50);
+        cin>>pages;
+        book[i]=new Book(title, pages);
+    }
+    for (int i = 0; i < n; ++i) {
+        book[i]->print();
+    }
+    for (int i = 0; i < n; ++i) {
+        delete book[i];
+    }
+        delete[] book;
+
+
+}
