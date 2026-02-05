@@ -1,0 +1,61 @@
+#include <iostream>
+#include <cstring>
+using namespace std;
+class Student{
+private:
+    char*name;
+    int *grades;
+    int numGrades;
+public:
+    Student(const char*emri ,  int*notat , int  sanotaa){
+        name = new char[strlen(emri)+1];
+        strcpy(name ,emri);
+        numGrades=sanotaa;
+        grades = new int[numGrades];
+        for (int i = 0; i < sanotaa; ++i) {
+            grades[i]=notat[i];
+        }
+    }
+    ~Student(){
+        delete[] name;
+        delete[] grades;
+    }
+    double average(){
+        double sum=0;
+        for (int i = 0; i < numGrades; ++i) {
+            sum= sum+grades[i];
+        }
+        return sum/numGrades;
+    }
+    void print(){
+        cout<<name<<" ";
+        for (int i = 0; i < numGrades; ++i) {
+            cout<<grades[i]<<" ";
+        }
+        cout<<average()<<endl;
+    }
+};
+int main(){
+    int n;
+    cin>>n;
+    Student**student = new Student * [n];
+    char name[50];
+    int grades[40];
+    int sanota;
+    for (int i = 0; i < n; ++i) {
+        cin.ignore();
+        cin.getline(name, 50);
+        cin>>sanota;
+        for (int j = 0; j < sanota; ++j) {
+            cin>>grades[j];
+        }
+        student[i] = new Student(name , grades, sanota);
+    }
+    for (int i = 0; i < n; ++i) {
+        student[i]->print();
+    }
+    for (int i = 0; i < n; ++i) {
+        delete student[i];
+    }
+    delete [] student;
+}
